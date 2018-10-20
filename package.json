@@ -1,0 +1,11 @@
+{
+  "name": "miniprogram-redux",
+  "version": "0.1.0",
+  "description": "Redux for Miniprogram",
+  "repository": {
+		"type": "git",
+		"url": "https://github.com/mingenesis/miniprogram-redux.git"
+	},
+	"author": "mingenesis",
+	"license": "MIT"
+}
