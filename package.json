@@ -1,11 +1,54 @@
 {
   "name": "miniprogram-redux",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Redux for Miniprogram",
+  "license": "MIT",
   "repository": {
-		"type": "git",
-		"url": "https://github.com/mingenesis/miniprogram-redux.git"
-	},
-	"author": "mingenesis",
-	"license": "MIT"
+    "type": "git",
+    "url": "https://github.com/mingenesis/miniprogram-redux.git"
+  },
+  "author": "ming",
+  "main": "lib/miniprogram-redux.js",
+  "unpkg": "dist/miniprogram-redux.js",
+  "module": "es/miniprogram-redux.js",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "src"
+  ],
+  "scripts": {
+    "clean": "rimraf lib dist es coverage",
+    "build": "rollup -c"
+  },
+  "dependencies": {
+    "redux": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-code-frame": "^6.26.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "9.0.0",
+    "babel-plugin-annotate-pure-calls": "^0.3.0",
+    "chalk": "^2.3.2",
+    "chokidar": "^2.0.2",
+    "eslint": "5.6.1",
+    "eslint-config-react-app": "^3.0.3",
+    "eslint-plugin-flowtype": "2.50.3",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jsx-a11y": "6.1.2",
+    "eslint-plugin-react": "7.11.1",
+    "minimatch": "^3.0.4",
+    "prettier": "1.14.3",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.66.5",
+    "rollup-plugin-babel": "^4.0.1",
+    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-replace": "^2.1.0",
+    "rollup-plugin-terser": "^3.0.0"
+  }
 }
