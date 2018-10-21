@@ -9,16 +9,15 @@
   },
   "author": "ming",
   "main": "lib/miniprogram-redux.js",
-  "unpkg": "dist/miniprogram-redux.js",
   "module": "es/miniprogram-redux.js",
   "files": [
-    "dist",
+    "miniprogram_dist",
     "lib",
     "es",
     "src"
   ],
   "scripts": {
-    "clean": "rimraf lib dist es coverage",
+    "clean": "rimraf lib miniprogram_dist es coverage",
     "build": "rollup -c"
   },
   "dependencies": {

@@ -28,35 +28,12 @@ export default [
     plugins: [babel()],
   },
 
-  // ES for Browsers
-  {
-    input: 'src/index.js',
-    output: { file: 'es/miniprogram-redux.mjs', format: 'es', indent: false },
-    plugins: [
-      nodeResolve({
-        jsnext: true,
-      }),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify('production'),
-      }),
-      terser({
-        compress: {
-          pure_getters: true,
-          unsafe: true,
-          unsafe_comps: true,
-          warnings: false,
-        },
-      }),
-    ],
-  },
-
-  // UMD Development
+  // Miniprogram Development
   {
     input: 'src/index.js',
     output: {
-      file: 'dist/miniprogram-redux.js',
-      format: 'umd',
-      name: 'Redux',
+      file: 'miniprogram_dist/miniprogram-redux.js',
+      format: 'cjs',
       indent: false,
     },
     plugins: [
@@ -72,13 +49,12 @@ export default [
     ],
   },
 
-  // UMD Production
+  // Miniprogram Production
   {
     input: 'src/index.js',
     output: {
-      file: 'dist/miniprogram-redux.min.js',
-      format: 'umd',
-      name: 'Redux',
+      file: 'miniprogram_dist/miniprogram-redux.min.js',
+      format: 'cjs',
       indent: false,
     },
     plugins: [
