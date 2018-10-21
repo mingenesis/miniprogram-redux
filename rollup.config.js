@@ -28,32 +28,11 @@ export default [
     plugins: [babel()],
   },
 
-  // Miniprogram Development
-  {
-    input: 'src/index.js',
-    output: {
-      file: 'miniprogram_dist/miniprogram-redux.js',
-      format: 'cjs',
-      indent: false,
-    },
-    plugins: [
-      nodeResolve({
-        jsnext: true,
-      }),
-      babel({
-        exclude: 'node_modules/**',
-      }),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify('development'),
-      }),
-    ],
-  },
-
   // Miniprogram Production
   {
     input: 'src/index.js',
     output: {
-      file: 'miniprogram_dist/miniprogram-redux.min.js',
+      file: 'miniprogram_dist/index.js',
       format: 'cjs',
       indent: false,
     },
