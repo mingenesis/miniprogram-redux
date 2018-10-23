@@ -18,13 +18,12 @@ npm install --save miniprogram-redux
 const { reduxApp } = require('miniprogram-redux');
 const { createStore } = require('redux');
 
-function rootReducer(state = { message: '' }, action) {
+function rootReducer(state = { loading: false }, action) {
   switch (action.type) {
-    case 'REFRESH':
-      return {
-        ...state,
-        message: 'Loading...'
-      };
+    case 'LOAD_INFO':
+      return { ...state, loading: true };
+    case 'LOAD_INFO_COMPLETION':
+      return { ...state, loading: false };
     default:
       return state;
   }
@@ -40,19 +39,35 @@ App(reduxApp(store)({
 const { reduxPage } = require('miniprogram-redux');
 
 Page(reduxPage(
-  state => ({ message: state.message })
+  state => ({ loading: state.loading })
 )({
-  onReady() {}
+  onReady() {},
+  
+  dataDidUpdate(prevData) {
+    if (prevData.loading !== this.data.loading) {
+      if (!this.data.loading) {
+        wx.stopPullDownRefresh();
+      }
+    }
+  }
 }))
 
-/* ui/home.js */
+/* components/home.js */
 const { reduxComponent } = require('miniprogram-redux');
 
 Component(reduxComponent(
-  state => ({ message: state.message })
+  state => ({ loading: state.loading })
 )({
   lifetimes: {
     ready() {}
+  },
+  
+  dataDidUpdate(prevData) {
+    if (prevData.loading !== this.data.loading) {
+      if (!this.data.loading) {
+        this.triggerEvent('infoDidLoad');
+      }
+    }
   }
 }))
 ```
