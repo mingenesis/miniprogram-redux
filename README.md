@@ -65,7 +65,7 @@ Component(reduxComponent(
   dataDidUpdate(prevData) {
     if (prevData.loading !== this.data.loading) {
       if (!this.data.loading) {
-        this.triggerEvent('infoDidLoad');
+        this.triggerEvent('infodidload');
       }
     }
   }
