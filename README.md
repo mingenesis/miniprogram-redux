@@ -7,6 +7,7 @@ Wechat Miniprogram bindings for [Redux](https://github.com/mingenesis/miniprogra
 ## Installation
 
 Miniprogram Redux requires **Wechat Miniprogram 2.2.3 or later.**
+
 ```
 npm install --save miniprogram-redux
 ```
@@ -15,8 +16,7 @@ npm install --save miniprogram-redux
 
 ```js
 /* app.js */
-const { reduxApp } = require('miniprogram-redux');
-const { createStore } = require('redux');
+const { reduxApp, Redux } = require('miniprogram-redux');
 
 function rootReducer(state = { loading: false }, action) {
   switch (action.type) {
@@ -29,47 +29,49 @@ function rootReducer(state = { loading: false }, action) {
   }
 }
 
-const store = createStore(rootReducer);
+const store = Redux.createStore(rootReducer);
 
-App(reduxApp(store)({
-  onLaunch() {}
-}));
+App(
+  reduxApp(store)({
+    onLaunch() {},
+  })
+);
 
 /* pages/home.js */
 const { reduxPage } = require('miniprogram-redux');
 
-Page(reduxPage(
-  state => ({ loading: state.loading })
-)({
-  onReady() {},
-  
-  dataDidUpdate(prevData) {
-    if (prevData.loading !== this.data.loading) {
-      if (!this.data.loading) {
-        wx.stopPullDownRefresh();
+Page(
+  reduxPage(state => ({ loading: state.loading }))({
+    onReady() {},
+
+    dataDidUpdate(prevData) {
+      if (prevData.loading !== this.data.loading) {
+        if (!this.data.loading) {
+          wx.stopPullDownRefresh();
+        }
       }
-    }
-  }
-}))
+    },
+  })
+);
 
 /* components/home.js */
 const { reduxComponent } = require('miniprogram-redux');
 
-Component(reduxComponent(
-  state => ({ loading: state.loading })
-)({
-  lifetimes: {
-    ready() {}
-  },
-  
-  dataDidUpdate(prevData) {
-    if (prevData.loading !== this.data.loading) {
-      if (!this.data.loading) {
-        this.triggerEvent('infodidload');
+Component(
+  reduxComponent(state => ({ loading: state.loading }))({
+    lifetimes: {
+      ready() {},
+    },
+
+    dataDidUpdate(prevData) {
+      if (prevData.loading !== this.data.loading) {
+        if (!this.data.loading) {
+          this.triggerEvent('infodidload');
+        }
       }
-    }
-  }
-}))
+    },
+  })
+);
 ```
 
 ## License

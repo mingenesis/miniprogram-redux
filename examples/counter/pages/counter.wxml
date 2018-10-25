@@ -1,0 +1,13 @@
+<view class="row">Clicked: {{value}} times</view>
+<view class="row">
+  <button bindtap="handleIncrement">+</button>
+</view>
+<view class="row">
+  <button bindtap="handleDecrement">-</button>
+</view>
+<view class="row">
+  <button bindtap="handleIncrementIfOdd">Increment if odd</button>
+</view>
+<view class="row">
+  <button bindtap="handleIncrementAsync">Increment async</button>
+</view>

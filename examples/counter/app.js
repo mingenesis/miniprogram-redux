@@ -1,3 +1,6 @@
-const { reduxApp } = require('miniprogram-redux');
+const { reduxApp, Redux } = require('miniprogram-redux');
+const counter = require('./reducers/index');
 
-App(reduxApp()({}));
+const store = Redux.createStore(counter);
+
+App(reduxApp(store)({}));
