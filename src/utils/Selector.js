@@ -1,26 +1,17 @@
-export function makeSelectorStateful(sourceSelector, store) {
-  // wrap the selector in an object that tracks its results between runs.
-  const selector = {
-    run(props) {
-      const nextProps = sourceSelector(store.getState(), props);
+export default class Selector {
+  constructor(store, sourceSelector) {
+    this.store = store;
+    this.sourceSelector = sourceSelector;
+    this.props = null;
+    this.shouldDataUpdate = false;
+  }
 
-      if (nextProps !== selector.props || selector.error) {
-        selector.shouldDataUpdate = true;
-        selector.props = nextProps;
-      }
-    },
-    getChangedProps(prevProps = {}) {
-      let changed = {};
+  run(props) {
+    const nextProps = this.sourceSelector(this.store.getState(), props);
 
-      for (let propKey in selector.props) {
-        if (selector.props[propKey] !== prevProps[propKey]) {
-          changed[propKey] = selector.props[propKey];
-        }
-      }
-
-      return changed;
-    },
-  };
-
-  return selector;
+    if (nextProps !== this.props) {
+      this.shouldDataUpdate = true;
+      this.props = nextProps;
+    }
+  }
 }
