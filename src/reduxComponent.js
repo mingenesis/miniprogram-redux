@@ -59,26 +59,26 @@ function reduxComponent(
             rendering = true;
             this.selector.shouldDataUpdate = false;
 
+            const nextProps = this.selector.props;
             let changedData = {};
 
-            for (let propKey in this.selector.props) {
-              if (this.selector.props[propKey] !== this.data[propKey]) {
-                changedData[propKey] = this.selector.props[propKey];
+            for (let propKey in nextProps) {
+              if (!(prevProps && prevProps[propKey] === nextProps[propKey])) {
+                changedData[propKey] = nextProps[propKey];
               }
             }
 
             this.setData(changedData, () => {
               rendering = false;
 
-              if (this.selector.shouldDataUpdate) {
-                renderUI(prevProps);
-                return;
-              }
-
               if (prevProps) {
                 if (WrappedConfig.dataDidUpdate) {
                   WrappedConfig.dataDidUpdate.call(this, prevProps);
                 }
+              }
+
+              if (this.selector.shouldDataUpdate) {
+                renderUI(nextProps);
               }
             });
           };
