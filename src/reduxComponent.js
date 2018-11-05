@@ -121,15 +121,15 @@ function reduxComponent(
         },
 
         detached() {
+          if (lifetimes.detached) {
+            lifetimes.detached.call(this);
+          }
+
           if (this.subscription) {
             this.subscription.tryUnsubscribe();
           }
           this.subscription = null;
           this.selector = null;
-
-          if (lifetimes.detached) {
-            lifetimes.detached.call(this);
-          }
         },
       },
 

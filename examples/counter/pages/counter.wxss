@@ -1,8 +1,0 @@
-page {
-  box-sizing: border-box;
-  padding: 24px;
-}
-
-.row {
-  padding: 12px 0;
-}

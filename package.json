@@ -1,6 +1,6 @@
 {
   "name": "miniprogram-redux",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Wechat Miniprogram bindings for Redux.",
   "license": "MIT",
   "repository": {
@@ -19,7 +19,7 @@
   "scripts": {
     "clean": "rimraf lib es miniprogram_dist",
     "lint": "miniprogram-scripts lint",
-    "build": "npm run clean && npm run lint && miniprogram-scripts build"
+    "build": "miniprogram-scripts build"
   },
   "dependencies": {
     "redux": "^4.0.0"
