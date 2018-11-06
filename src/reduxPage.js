@@ -75,6 +75,16 @@ function reduxPage(
         }
       },
 
+      onUnload() {
+        if (this.subscription) {
+          this.subscription.tryUnsubscribe();
+        }
+
+        if (WrappedConfig.onUnload) {
+          WrappedConfig.onUnload.call(this);
+        }
+      },
+
       onShow() {
         this.syncUI();
 
@@ -94,16 +104,6 @@ function reduxPage(
 
         if (WrappedConfig.onHide) {
           WrappedConfig.onHide.call(this);
-        }
-      },
-
-      onUnload() {
-        if (this.subscription) {
-          this.subscription.tryUnsubscribe();
-        }
-
-        if (WrappedConfig.onUnload) {
-          WrappedConfig.onUnload.call(this);
         }
       },
     };
