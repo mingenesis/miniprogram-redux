@@ -51,12 +51,13 @@ function reduxComponent(
           );
           this.selector = new Selector(store, sourceSelector);
 
-          let rendering = false;
-          const renderUI = prevProps => {
-            if (rendering) {
+          let doingSetData = false;
+          const updateData = prevProps => {
+            if (doingSetData) {
               return;
             }
-            rendering = true;
+
+            doingSetData = true;
             this.selector.shouldDataUpdate = false;
 
             const nextProps = this.selector.props;
@@ -69,7 +70,7 @@ function reduxComponent(
             }
 
             this.setData(changedData, () => {
-              rendering = false;
+              doingSetData = false;
 
               if (prevProps) {
                 if (WrappedConfig.dataDidUpdate) {
@@ -78,7 +79,7 @@ function reduxComponent(
               }
 
               if (this.selector.shouldDataUpdate) {
-                renderUI(nextProps);
+                updateData(nextProps);
               }
             });
           };
@@ -95,7 +96,7 @@ function reduxComponent(
             this.selector.run(ownProps);
 
             if (this.selector.shouldDataUpdate) {
-              renderUI(prevProps);
+              updateData(prevProps);
             }
           };
 

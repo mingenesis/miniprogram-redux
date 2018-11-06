@@ -18,12 +18,13 @@ function reduxPage(
         const sourceSelector = selectorFactory(store.dispatch, connectOptions);
         this.selector = new Selector(store, sourceSelector);
 
-        let rendering = false;
-        const renderUI = prevProps => {
-          if (rendering) {
+        let doingSetData = false;
+        const updateData = prevProps => {
+          if (doingSetData) {
             return;
           }
-          rendering = true;
+
+          doingSetData = true;
           this.selector.shouldDataUpdate = false;
 
           const nextProps = this.selector.props;
@@ -36,7 +37,7 @@ function reduxPage(
           }
 
           this.setData(changedData, () => {
-            rendering = false;
+            doingSetData = false;
 
             if (prevProps) {
               if (WrappedConfig.dataDidUpdate) {
@@ -45,17 +46,17 @@ function reduxPage(
             }
 
             if (this.selector.shouldDataUpdate) {
-              renderUI(nextProps);
+              updateData(nextProps);
             }
           });
         };
 
         this.syncUI = function() {
           const prevProps = this.selector.props;
-          this.selector.run(this.options);
+          this.selector.run({ ...this.options });
 
           if (this.selector.shouldDataUpdate) {
-            renderUI(prevProps);
+            updateData(prevProps);
           }
         };
 
