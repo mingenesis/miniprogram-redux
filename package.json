@@ -1,6 +1,6 @@
 {
   "name": "miniprogram-redux",
-  "version": "0.4.4",
+  "version": "0.5.1",
   "description": "Wechat Miniprogram bindings for Redux.",
   "license": "MIT",
   "repository": {

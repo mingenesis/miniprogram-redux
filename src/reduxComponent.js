@@ -85,7 +85,14 @@ function reduxComponent(
 
           this.syncUI = () => {
             const prevProps = this.selector.props;
-            this.selector.run({ ...this.data });
+
+            let ownProps = {};
+
+            for (let propKey in properties) {
+              ownProps[propKey] = this.data[propKey];
+            }
+
+            this.selector.run(ownProps);
 
             if (this.selector.shouldDataUpdate) {
               renderUI(prevProps);
@@ -105,31 +112,23 @@ function reduxComponent(
         attached() {
           this.syncUI();
 
+          if (this.subscription) {
+            this.subscription.trySubscribe();
+          }
+
           if (lifetimes.attached) {
             lifetimes.attached.call(this);
           }
         },
 
-        ready() {
-          if (this.subscription) {
-            this.subscription.trySubscribe();
-          }
-
-          if (lifetimes.ready) {
-            lifetimes.ready.call(this);
-          }
-        },
-
         detached() {
-          if (lifetimes.detached) {
-            lifetimes.detached.call(this);
-          }
-
           if (this.subscription) {
             this.subscription.tryUnsubscribe();
           }
-          this.subscription = null;
-          this.selector = null;
+
+          if (lifetimes.detached) {
+            lifetimes.detached.call(this);
+          }
         },
       },
 

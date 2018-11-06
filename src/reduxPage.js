@@ -66,18 +66,12 @@ function reduxPage(
 
         this.syncUI();
 
-        if (WrappedConfig.onLoad) {
-          WrappedConfig.onLoad.call(this, options);
-        }
-      },
-
-      onReady() {
         if (this.subscription) {
           this.subscription.trySubscribe();
         }
 
-        if (WrappedConfig.onReady) {
-          WrappedConfig.onReady.call(this);
+        if (WrappedConfig.onLoad) {
+          WrappedConfig.onLoad.call(this, options);
         }
       },
 
@@ -107,9 +101,6 @@ function reduxPage(
         if (this.subscription) {
           this.subscription.tryUnsubscribe();
         }
-
-        this.subscription = null;
-        this.selector = null;
 
         if (WrappedConfig.onUnload) {
           WrappedConfig.onUnload.call(this);
