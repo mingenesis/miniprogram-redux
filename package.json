@@ -2,6 +2,7 @@
   "name": "miniprogram-redux",
   "version": "0.5.3",
   "description": "Wechat Miniprogram bindings for Redux.",
+  "keywords": ["redux", "miniprogram", "wechat", "weapp"],
   "license": "MIT",
   "repository": {
     "type": "git",
