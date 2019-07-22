@@ -2,7 +2,12 @@
   "name": "miniprogram-redux",
   "version": "0.5.3",
   "description": "Wechat Miniprogram bindings for Redux.",
-  "keywords": ["redux", "miniprogram", "wechat", "weapp"],
+  "keywords": [
+    "redux",
+    "miniprogram",
+    "wechat",
+    "weapp"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -20,29 +25,38 @@
   "scripts": {
     "clean": "rimraf lib es miniprogram_dist",
     "lint": "eslint src",
-    "build": "rollup -c",
-    "prepare": "npm run clean && npm run lint && npm run build"
+    "prebuild": "yarn clean",
+    "build:commonjs": "BABEL_ENV=commonjs babel src --out-dir lib",
+    "build:es": "babel src --out-dir es",
+    "build:miniprogram": "NODE_ENV=production rollup -c -d miniprogram_dist",
+    "build": "yarn build:commonjs && yarn build:es && yarn build:miniprogram",
+    "prepare": "yarn lint && yarn build"
   },
   "dependencies": {
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "^9.0.0",
-    "eslint": "^5.9.0",
-    "eslint-config-react-app": "3.0.6",
-    "eslint-plugin-flowtype": "^2.50.3",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1",
-    "rimraf": "^2.6.2",
-    "rollup": "1.0.1",
-    "rollup-plugin-babel": "4.2.0",
-    "rollup-plugin-node-resolve": "4.0.0",
-    "rollup-plugin-replace": "2.1.0",
-    "rollup-plugin-terser": "4.0.1"
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "@typescript-eslint/eslint-plugin": "1.x",
+    "@typescript-eslint/parser": "1.x",
+    "babel-eslint": "10.x",
+    "eslint": "5.x",
+    "eslint-config-react-app": "^4.0.1",
+    "eslint-plugin-flowtype": "2.x",
+    "eslint-plugin-import": "2.x",
+    "eslint-plugin-jsx-a11y": "6.x",
+    "eslint-plugin-react": "7.x",
+    "eslint-plugin-react-hooks": "1.x",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.17.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-terser": "^5.1.1",
+    "typescript": "3.x"
   }
 }
