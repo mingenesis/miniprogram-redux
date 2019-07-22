@@ -35,41 +35,48 @@ export default Behavior({
     },
   },
   definitionFilter(defFields) {
-    const selector = defFields.selector || (() => null);
+    const selector = defFields.selector;
     const stateDidUpdate = defFields.stateDidUpdate;
 
+    if (!selector) {
+      throw new Error('请实现selector方法');
+    }
+
     defFields.methods = defFields.methods || {};
-    defFields.methods._checkForUpdates = function() {
+    defFields.methods._checkForUpdates = checkForUpdates;
+
+    function checkForUpdates() {
       const nextState = selector(context.store.getState(), this.data);
-      const forceRender = () => {
-        if (this._dataSetting) {
-          return;
-        }
-
-        this._dataSetting = true;
-        this._prevState = this._state;
-        this._state = this._nextState;
-
-        this.setData(this._state, () => {
-          this._dataSetting = undefined;
-
-          if (stateDidUpdate && this._prevState) {
-            stateDidUpdate.call(this, this._prevState);
-          }
-          this._prevState = this._state;
-
-          if (this._nextState !== this._state) {
-            forceRender();
-          }
-        });
-      };
 
       if (nextState === this._state) {
         return;
       }
 
       this._nextState = nextState;
-      forceRender();
-    };
+      forceRender.call(this);
+    }
+
+    function forceRender() {
+      if (this._dataSetting) {
+        return;
+      }
+
+      this._dataSetting = true;
+      this._prevState = this._state;
+      this._state = this._nextState;
+
+      this.setData(this._state, () => {
+        this._dataSetting = undefined;
+
+        if (stateDidUpdate && this._prevState) {
+          stateDidUpdate.call(this, this._prevState);
+        }
+        this._prevState = this._state;
+
+        if (this._nextState !== this._state) {
+          forceRender.call(this);
+        }
+      });
+    }
   },
 });
