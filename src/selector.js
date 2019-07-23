@@ -46,7 +46,7 @@ export default Behavior({
     defFields.methods._checkForUpdates = checkForUpdates;
 
     function checkForUpdates() {
-      const nextState = selector(context.store.getState(), this.data);
+      const nextState = selector(context.store.getState(), { ...this.data });
 
       if (nextState === this._state) {
         return;
