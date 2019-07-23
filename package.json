@@ -1,6 +1,6 @@
 {
   "name": "miniprogram-redux",
-  "version": "0.5.3",
+  "version": "1.0.0",
   "description": "Wechat Miniprogram bindings for Redux.",
   "keywords": [
     "redux",
@@ -9,13 +9,17 @@
     "weapp"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/mingenesis/miniprogram-redux",
   "repository": {
     "type": "git",
     "url": "https://github.com/mingenesis/miniprogram-redux.git"
   },
-  "author": "ming",
-  "main": "lib/miniprogram-redux.js",
-  "module": "es/miniprogram-redux.js",
+  "bugs": {
+    "url": "https://github.com/mingenesis/miniprogram-redux/issues"
+  },
+  "author": "Zhu DeMing <mingenesis@qq.com>",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "files": [
     "miniprogram_dist",
     "lib",
