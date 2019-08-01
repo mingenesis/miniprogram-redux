@@ -8,7 +8,7 @@ export default Behavior({
         context.store,
         context.subscription
       );
-      this._subscription.onStateChange = this._checkForUpdates.bind(this);
+      this._subscription.onStateChange = () => this._checkForUpdates();
     },
     attached() {
       this._subscription.trySubscribe();
@@ -27,13 +27,6 @@ export default Behavior({
       this._subscription.tryUnsubscribe();
     },
   },
-  observers: {
-    '**'() {
-      if (this._state === this._prevState) {
-        this._checkForUpdates();
-      }
-    },
-  },
   definitionFilter(defFields) {
     const selector = defFields.selector;
     const stateDidUpdate = defFields.stateDidUpdate;
@@ -44,6 +37,30 @@ export default Behavior({
 
     defFields.methods = defFields.methods || {};
     defFields.methods._checkForUpdates = checkForUpdates;
+
+    const props = defFields.properties;
+
+    if (props) {
+      for (const pKey in props) {
+        let pValue = props[pKey];
+
+        if (pValue === null || typeof pValue === 'function') {
+          pValue = { type: pValue };
+        }
+
+        const { observer } = pValue;
+
+        pValue.observer = function(...args) {
+          if (observer) {
+            observer.apply(this, args);
+          }
+
+          this._checkForUpdates();
+        };
+
+        props[pKey] = pValue;
+      }
+    }
 
     function checkForUpdates() {
       const nextState = selector(context.store.getState(), { ...this.data });
@@ -64,6 +81,7 @@ export default Behavior({
       this._dataSetting = true;
       this._prevState = this._state;
       this._state = this._nextState;
+      this._nextState = undefined;
 
       this.setData(this._state, () => {
         this._dataSetting = undefined;
@@ -71,9 +89,8 @@ export default Behavior({
         if (stateDidUpdate && this._prevState) {
           stateDidUpdate.call(this, this._prevState);
         }
-        this._prevState = this._state;
 
-        if (this._nextState !== this._state) {
+        if (this._nextState) {
           forceRender.call(this);
         }
       });

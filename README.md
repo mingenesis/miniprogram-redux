@@ -7,7 +7,7 @@ Wechat Miniprogram bindings for [Redux](https://github.com/mingenesis/miniprogra
 
 ## Getting Started
 
-Miniprogram Redux requires **Wechat Miniprogram 2.6.1 or later.**
+Miniprogram Redux requires **Wechat Miniprogram 2.2.3 or later.**
 
 Install `miniprogram-redux` using npm.
 
@@ -74,9 +74,9 @@ Component({
 
 A: 页面除了能通过 Page() 创建，还可以通过 Component() 创建的，详情可参考[官方文档](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/component.html)。页面通过 Component() 创建，就可以使用 selector 绑定数据了。
 
-### Q: 为什么该组件需要依赖 2.6.1 版的基础库？
+### Q: 为什么该组件需要依赖 2.2.3 版的基础库？
 
-A: 因为该组件依赖到自定义组件里的数据监听器这一新功能，详情可参考[官方文档](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/observer.html)。考虑到该功能对性能上的提升，所以不考虑对旧的版本作兼容。
+A: 因为该组件依赖到自定义组件里的生命周期，详情可参考[官方文档](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/lifetimes.html)。
 
 ## License
 
