@@ -2,19 +2,21 @@ import Subscription from './utils/Subscription';
 
 const context = {};
 
-function notifySubscribers() {
-  context.subscription.notifyNestedSubs();
-}
-
 export function Provider(store) {
-  if (context.store) {
-    context.subscription.tryUnsubscribe();
+  let subscription = context.subscription;
+
+  if (subscription) {
+    subscription.tryUnsubscribe();
+    subscription.onStateChange = null;
   }
 
+  subscription = new Subscription(store);
+  subscription.onStateChange = subscription.notifyNestedSubs;
+
   context.store = store;
-  context.subscription = new Subscription(store);
-  context.subscription.onStateChange = notifySubscribers;
-  context.subscription.trySubscribe();
+  context.subscription = subscription;
+
+  subscription.trySubscribe();
 }
 
 export function getStore() {
