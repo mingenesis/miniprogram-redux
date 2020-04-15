@@ -44,7 +44,7 @@ App({
 const { selector, dispatch, Reselect } = require('miniprogram-redux');
 const stateSelector = Reselect.createSelector(
   (state, data) => state[data.topicId],
-  topic => ({ loading: topic.loading })
+  topic => topic
 );
 
 Component({
